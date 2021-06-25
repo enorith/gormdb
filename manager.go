@@ -2,7 +2,6 @@ package gormdb
 
 import (
 	"fmt"
-	"github.com/enorith/gormdb/plugins"
 	"sync"
 
 	orm "gorm.io/gorm"
@@ -40,12 +39,7 @@ func (m *Manager) RegisterDefault(register Register) *Manager {
 
 func (m *Manager) wrapRegister(r Register) Register {
 	return func() (*orm.DB, error) {
-		db, e := r()
-		if e != nil {
-			return nil, e
-		}
-
-		return db, db.Use(&plugins.Cast{})
+		return r()
 	}
 }
 
