@@ -4,11 +4,12 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"fmt"
+	"testing"
+
 	"github.com/enorith/gormdb"
 	"github.com/enorith/supports/carbon"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"testing"
 )
 
 var testDSN = "host=localhost user=root password=root dbname=test port=13306 sslmode=disable TimeZone=Asia/Shanghai"

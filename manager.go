@@ -8,6 +8,7 @@ import (
 )
 
 var DefaultConnectionName = "default"
+var DefaultManager = NewManager()
 
 type Register func() (*orm.DB, error)
 
