@@ -8,11 +8,11 @@ import (
 
 	"github.com/enorith/gormdb"
 	"github.com/enorith/supports/carbon"
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-var testDSN = "host=localhost user=root password=root dbname=test port=13306 sslmode=disable TimeZone=Asia/Shanghai"
+var testDSN = "root:root@tcp(127.0.0.1:3306)/test"
 
 type Props struct {
 	Age int    `json:"age"`
@@ -45,7 +45,7 @@ func Test_ManagerRegister(t *testing.T) {
 	m := gormdb.NewManager()
 
 	m.RegisterDefault(func() (*gorm.DB, error) {
-		return gorm.Open(postgres.Open(testDSN))
+		return gorm.Open(mysql.Open(testDSN))
 	})
 
 	db, err := m.GetConnection()
