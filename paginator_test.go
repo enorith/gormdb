@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-var dsn = "root:root@tcp(127.0.0.1:3306)/test"
+var dsn = "root:root@tcp(127.0.0.1:3306)/enorith"
 
 type TestUser struct {
 	ID        int    `gorm:"column:id"`

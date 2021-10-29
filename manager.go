@@ -30,18 +30,12 @@ func (m *Manager) Using(name string) *Manager {
 func (m *Manager) Register(name string, r Register) *Manager {
 	m.m.Lock()
 	defer m.m.Unlock()
-	m.registers[name] = m.wrapRegister(r)
+	m.registers[name] = r
 	return m
 }
 
 func (m *Manager) RegisterDefault(register Register) *Manager {
 	return m.Register(DefaultConnectionName, register)
-}
-
-func (m *Manager) wrapRegister(r Register) Register {
-	return func() (*orm.DB, error) {
-		return r()
-	}
 }
 
 func (m *Manager) GetConnection(name ...string) (*orm.DB, error) {
