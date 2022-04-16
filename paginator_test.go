@@ -1,6 +1,8 @@
 package gormdb_test
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -16,7 +18,7 @@ var dsn = "root:root@tcp(127.0.0.1:3306)/enorith"
 
 type TestUser struct {
 	ID        int    `gorm:"column:id"`
-	Name      string `gorm:"column:name"`
+	Nickname  string `gorm:"column:nickname"`
 	CreatedAt string `gorm:"column:created_at"`
 }
 
@@ -41,7 +43,8 @@ func Test_Paginator(t *testing.T) {
 			Logger: newLogger,
 		})
 	})
-	p := gormdb.NewPaginator(1, 15, m)
+
+	p := gormdb.NewPaginator(1, 2)
 
 	tx, e := m.GetConnection()
 	if e != nil {
@@ -49,9 +52,16 @@ func Test_Paginator(t *testing.T) {
 	}
 
 	var us []TestUser
-	r, e := p.Paginate(tx, &us)
+
+	r, e := p.Paginate(tx.Where("id > ?", 1), &us)
 	if e != nil {
 		t.Fatal(e)
 	}
-	t.Log(r["data"], r["meta"])
+	for _, tu := range us {
+		tu.Nickname += "xx"
+	}
+
+	j, _ := json.MarshalIndent(r, "", "  ")
+
+	fmt.Printf("%s\n", j)
 }

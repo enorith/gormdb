@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var testDSN = "root:root@tcp(127.0.0.1:3306)/test"
+var testDSN = "root:root@tcp(127.0.0.1:3306)/enorith"
 
 type Props struct {
 	Age int    `json:"age"`
