@@ -44,7 +44,7 @@ func Test_Paginator(t *testing.T) {
 		})
 	})
 
-	p := gormdb.NewPaginator(1, 2)
+	p := gormdb.NewPaginator(1, 20)
 
 	tx, e := m.GetConnection()
 	if e != nil {

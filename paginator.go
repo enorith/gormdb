@@ -15,7 +15,6 @@ var ResultFormater = func(data interface{}, meta PageMeta) map[string]interface{
 
 type Paginator struct {
 	page, perPage int
-	manger        *Manager
 }
 
 type PageMeta struct {
