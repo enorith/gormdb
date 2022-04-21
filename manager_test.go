@@ -36,8 +36,7 @@ func (p Props) Value() (driver.Value, error) {
 
 type User struct {
 	ID        int            `gorm:"column:id;primaryKey"`
-	Name      string         `gorm:"column:name"`
-	Props     Props          `gorm:"column:props"`
+	Name      string         `gorm:"column:nickname"`
 	CreatedAt *carbon.Carbon `gorm:"column:created_at"`
 }
 
@@ -57,6 +56,6 @@ func Test_ManagerRegister(t *testing.T) {
 
 	db.Find(&users)
 	for _, user := range users {
-		fmt.Println(user.CreatedAt.GetDateTimeString(), user.Props, user.Name)
+		fmt.Println(user.CreatedAt.GetDateTimeString(), user.Name)
 	}
 }
