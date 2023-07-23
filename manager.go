@@ -43,32 +43,32 @@ func (m *Manager) GetConnection(name ...string) (*orm.DB, error) {
 	if len(name) > 0 {
 		using = name[0]
 	} else {
+		if len(m.connectionName) < 1 {
+			m.connectionName = DefaultConnectionName
+		}
 		using = m.connectionName
 	}
-	m.Using(using)
 
-	if len(m.connectionName) < 1 {
-		m.connectionName = DefaultConnectionName
-	}
+	//m.Using(using)
 
 	m.m.RLock()
-	c, has := m.connections[m.connectionName]
+	c, has := m.connections[using]
 	m.m.RUnlock()
 	if has {
 		return c, nil
 	}
 	m.m.RLock()
-	register, exists := m.registers[m.connectionName]
+	register, exists := m.registers[using]
 	m.m.RUnlock()
 	if !exists {
-		return nil, fmt.Errorf("unregisterd connection [%s]", m.connectionName)
+		return nil, fmt.Errorf("unregisterd connection [%s]", using)
 	}
 	c, e := register()
 	if e != nil {
 		return nil, fmt.Errorf("register connection error: %v", e)
 	}
 
-	m.setConnection(m.connectionName, c)
+	m.setConnection(using, c)
 
 	return c, nil
 }
